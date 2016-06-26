@@ -39,7 +39,12 @@ sub find ($\@) {
 		$passes++;
 	}
 
-	$index = $low - 1 if($low == scalar(@$aref));
+	$high = scalar(@$aref);
+	if($low == 0) { $index = 0; }
+	elsif($low == $high) { $index = $high - 1; }
+	elsif($aref->[$low] == $needle) { $index = $low; }
+	elsif(abs($needle - $aref->[$low - 1]) <= abs($aref->[$low] - $needle)) { $index = $low - 1; }
+	else { $index = $low; };
 
 	print scalar((caller(0))[3]) . "(" . $needle . "): index=$index, passes=$passes, aref[$index]=$aref->[$index]" . "\n" if($self->Debug());
 
@@ -60,6 +65,7 @@ __END__
 
 =head1 SUBROUTINES/METHODS
 
+
 =head1 CONFIGURATION AND ENVIRONMENT
 
 =head1 DEPENDENCIES
@@ -77,6 +83,7 @@ or suggestion, send me an email.
 
 
 =head1 DIAGNOSTICS
+
 
 =head1 BUGS AND LIMITATIONS
 
