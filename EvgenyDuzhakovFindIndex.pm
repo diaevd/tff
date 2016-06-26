@@ -1,5 +1,3 @@
-## no critic (RCS,prototypes)
-
 package EvgenyDuzhakovFindIndex;
 
 use 5.006000;
@@ -57,7 +55,25 @@ __END__
 
 =head1 NAME
 
+EvgenyDuzhakovFindIndex - Find the lowest index of a nearest matching element in sorted array.
+
 =head1 SYNOPSIS
+
+This module is find the lowest index of a nearest matching element in sorted array and count iterations.
+
+Examples:
+
+    use EvgenyDuzhakovFindIndex;
+
+    # Find the lowest index of a matching element.
+    my $finder = EvgenyDuzhakovFindIndex->new();
+    $finder->Debug(1); # enable debug print
+    my ($index, $passes) = (0, 0);
+    ($index, $passes) = $finder->find(10, [1, 2, 3]); # expected index=2
+    ($index, $passes) = $finder->find(0, [1, 2, 3]); # expected index=0
+    ($index, $passes) = $finder->find(1, [1, 2, 3]); # expected index=0
+    ($index, $passes) = $finder->find(2, [1, 2, 3]); # expected index=1
+
 
 =head1 DESCRIPTION
 
@@ -65,6 +81,12 @@ __END__
 
 =head1 SUBROUTINES/METHODS
 
+=head2 CLASS->find(NEEDLE, SORTED_ARRAY_REF)
+
+    ($index, $passes) = $finder->find($needle, \@sorted_array);
+
+Search for C<$needle> within C<@sorted_array>.  If C<$needle> is found, return index will be the lowest index of
+a matching element, or lowest index of a nearest matching element if the needle isn't found.
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
