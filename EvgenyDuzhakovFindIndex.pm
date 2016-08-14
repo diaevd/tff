@@ -38,13 +38,16 @@ sub find ($\@) {
 	}
 
 	$high = scalar(@$aref);
-	if($low == 0) { $index = 0; }
-	elsif($low == $high) { $index = $high - 1; }
-	elsif($aref->[$low] == $needle) { $index = $low; }
+	if($low == 0)                                                           { $index = 0; }
+	elsif($low == $high)                                                    { $index = $high - 1; }
+	elsif($aref->[$low] == $needle)                                         { $index = $low; }
 	elsif(abs($needle - $aref->[$low - 1]) <= abs($aref->[$low] - $needle)) { $index = $low - 1; }
-	else { $index = $low; };
+	else                                                                    { $index = $low; }
 
-	print scalar((caller(0))[3]) . "(" . $needle . "): index=$index, passes=$passes, aref[$index]=$aref->[$index]" . "\n" if($self->Debug());
+	print scalar((caller(0))[3]) . "("
+		. $needle
+		. "): index=$index, passes=$passes, aref[$index]=$aref->[$index]" . "\n"
+		if($self->Debug());
 
 	return ($index, $passes);
 }

@@ -2,12 +2,13 @@
 
 use strict;
 use EvgenyDuzhakovFindIndex;
-use Test::More tests => 11;
+use Test::More tests => 13;
 
 my @arr = qw(-30 -20 -10 1 10 20 30 40 50 60 70 80 90 100);
-print "\@arr: " . join(", ", map { "[$_] => $arr[$_]" } (0 .. $#arr)) . "\n";
+print "\@arr: " . join(", ", map {"[$_] => $arr[$_]"} (0 .. $#arr)) . "\n";
 
 my $finder = EvgenyDuzhakovFindIndex->new();
+
 #$finder->Debug(1); # enable debug print
 my ($index, $passes) = (0, 0);
 
@@ -22,6 +23,9 @@ is($arr[$index], -20, "find '-20': [$index] => $arr[$index]), passes=$passes");
 
 ($index, $passes) = $finder->find(-21, \@arr);
 is($arr[$index], -20, "find '-21': [$index] => $arr[$index]), passes=$passes");
+
+($index, $passes) = $finder->find(-30, \@arr);
+is($arr[$index], -30, "find '-30': [$index] => $arr[$index]), passes=$passes");
 
 ($index, $passes) = $finder->find(20, \@arr);
 is($arr[$index], 20, "find '20': [$index] => $arr[$index]), passes=$passes");
@@ -43,6 +47,9 @@ is($arr[$index], -30, "find '-35': [$index] => $arr[$index]), passes=$passes");
 
 ($index, $passes) = $finder->find(110, \@arr);
 is($arr[$index], 100, "find '110': [$index] => $arr[$index]), passes=$passes");
+
+($index, $passes) = $finder->find(100, \@arr);
+is($arr[$index], 100, "find '100': [$index] => $arr[$index]), passes=$passes");
 
 done_testing();
 
