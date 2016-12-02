@@ -69,6 +69,6 @@ func TestCardsSortedBySuitRank(t *testing.T) {
 	sort.Sort(CardsSortedByRank(cards))
 	str := cards[0].String()
 	if str != "[H:A]" {
-		t.Errorf("CardsSortedByRank: expectd [H:A] got %s", str)
+		t.Errorf("CardsSortedBySuitRank: expectd [H:A] got %s", str)
 	}
 }
