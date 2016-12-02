@@ -18,7 +18,7 @@ type Rank uint8
 
 const (
 	// Hearts черви
-	Hearts Suit = 1 << iota
+	Hearts Suit = 1 + iota
 	// Diamonds бубны
 	Diamonds
 	// Clubs трефы
@@ -55,6 +55,13 @@ var rankName = map[Rank]string{
 
 // NewCard конструктор новой карты
 func NewCard(r Rank, s Suit) *Card {
+
+	if r < 1 || r > 13 {
+		panic("Rank is out of range")
+	}
+	if s < 1 || s > 4 {
+		panic("Suit is out of range")
+	}
 
 	return &Card{Rank: r, Suit: s}
 }
