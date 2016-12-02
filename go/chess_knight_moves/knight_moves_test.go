@@ -23,36 +23,24 @@ func TestSquareString(t *testing.T) {
 
 func TestKnightLegalMoves(t *testing.T) {
 
-	// b1
-	pos := NewSquare(2, 1)
-	moves := pos.KnightLegalMoves()
-	str := strings.Join(moves, " ")
-	res := "Nc3 Na3 Nd2"
-	if str != res {
-		t.Errorf("KnightLegalMoves: expected [%s], got [%s]", res, str)
+	places := []Square{
+		{2, 1}, // b1
+		{3, 3}, // c3
+		{1, 3}, // a3
+		{4, 2}, // d2
 	}
-	// c3
-	pos = NewSquare(3, 3)
-	moves = pos.KnightLegalMoves()
-	str = strings.Join(moves, " ")
-	res = "Nd5 Nb5 Nd1 Nb1 Ne4 Na4 Ne2 Na2"
-	if str != res {
-		t.Errorf("KnightLegalMoves: expected [%s], got [%s]", res, str)
+	expected := []string{
+		"Nc3 Na3 Nd2",                     // b1
+		"Nd5 Nb5 Nd1 Nb1 Ne4 Na4 Ne2 Na2", // c3
+		"Nb5 Nb1 Nc4 Nc2",                 // a3
+		"Ne4 Nc4 Nf3 Nb3 Nf1 Nb1",         // d2
 	}
-	// a3
-	pos = NewSquare(1, 3)
-	moves = pos.KnightLegalMoves()
-	str = strings.Join(moves, " ")
-	res = "Nb5 Nb1 Nc4 Nc2"
-	if str != res {
-		t.Errorf("KnightLegalMoves: expected [%s], got [%s]", res, str)
-	}
-	// d2
-	pos = NewSquare(4, 2)
-	moves = pos.KnightLegalMoves()
-	str = strings.Join(moves, " ")
-	res = "Ne4 Nc4 Nf3 Nb3 Nf1 Nb1"
-	if str != res {
-		t.Errorf("KnightLegalMoves: expected [%s], got [%s]", res, str)
+	for i, pos := range places {
+		// b1
+		moves := pos.KnightLegalMoves()
+		str := strings.Join(moves, " ")
+		if str != expected[i] {
+			t.Errorf("KnightLegalMoves: expected [%s], got [%s]", expected[i], str)
+		}
 	}
 }
