@@ -5,8 +5,9 @@ use AnyEvent::HTTP;
 use Time::HiRes qw/time/;
 use Regexp::Common qw/URI/;
 use File::Basename;
+use IO::Interactive qw/is_interactive/
 
-if(-t STDIN) {
+if(is_interactive()) { #if (-t STDIN) { # perlcritic: See page 218 of PBP.  (Severity: 5)
 	my $self_name = basename($0);
 	die <<EOT;
 Get urls by list from <STDIN>
