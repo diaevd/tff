@@ -1,0 +1,41 @@
+diabolo@veles:~/src/test/tff/go/locks$ go run --race locks.main2.go
+2016/12/05 12:32:21.680151 locks.main2.go:16: Run test
+2016/12/05 12:32:21.680502 locks.main2.go:22: func(5):0 s: 5s
+2016/12/05 12:32:21.680531 locks.main2.go:34: func(5):0 s: 5s
+2016/12/05 12:32:21.680561 locks.main2.go:24: func(5):1 s: 1s
+2016/12/05 12:32:26.680758 locks.main2.go:26: func(5):2 s: 1s
+2016/12/05 12:32:26.680821 locks.main2.go:28: func(5):3 s: 1s
+2016/12/05 12:32:26.680851 locks.main2.go:36: func(5):1 s: 1s
+2016/12/05 12:32:31.681043 locks.main2.go:38: func(5):2 s: 1s
+2016/12/05 12:32:31.681105 locks.main2.go:40: func(5):3 s: 1s
+2016/12/05 12:32:31.681139 locks.main2.go:47: End test
+
+diabolo@veles:~/src/test/tff/go/locks$ go run locks.main2.go
+2016/12/05 12:34:08.584599 locks.main2.go:16: Run test
+2016/12/05 12:34:08.584648 locks.main2.go:34: func(5):0 s: 5s
+2016/12/05 12:34:08.584659 locks.main2.go:36: func(5):1 s: 1s
+2016/12/05 12:34:08.584694 locks.main2.go:22: func(5):0 s: 5s
+2016/12/05 12:34:13.584790 locks.main2.go:38: func(5):2 s: 1s
+2016/12/05 12:34:13.584835 locks.main2.go:40: func(5):3 s: 1s
+fatal error: all goroutines are asleep - deadlock!
+
+goroutine 1 [semacquire]:
+sync.runtime_Semacquire(0xc82000a3cc)
+	/usr/lib/go-1.6/src/runtime/sema.go:47 +0x26
+sync.(*WaitGroup).Wait(0xc82000a3c0)
+	/usr/lib/go-1.6/src/sync/waitgroup.go:127 +0xb4
+main.main()
+	/home/diabolo/src/test/tff/go/locks/locks.main2.go:45 +0x254
+
+goroutine 5 [semacquire]:
+sync.runtime_Semacquire(0xc82000a404)
+	/usr/lib/go-1.6/src/runtime/sema.go:47 +0x26
+sync.(*Mutex).Lock(0xc82000a400)
+	/usr/lib/go-1.6/src/sync/mutex.go:83 +0x1c4
+github.com/diaevd/lock.(*KeyLock).Block(0xc82000e480, 0x5031f8, 0x4)
+	/home/diabolo/devel/golang/src/github.com/diaevd/lock/lock.go:27 +0x1ff
+main.main.func1(0xc82000a3c0, 0xc820014280, 0xc82000e480, 0x5)
+	/home/diabolo/src/test/tff/go/locks/locks.main2.go:23 +0x1c2
+created by main.main
+	/home/diabolo/src/test/tff/go/locks/locks.main2.go:30 +0x207
+exit status 2
